@@ -1,5 +1,9 @@
-import { Pool, type PoolConfig} from 'pg'
+import { Pool } from "pg";
 
-export default new Pool({
-   connectionString: String(process.env.CONNECTION_STRING)
-})
+const connectionString = process.env.CONNECTION_STRING;
+
+if (!connectionString) {
+  throw new Error("CONNECTION_STRING environment variable is not set.");
+}
+
+export default new Pool({ connectionString });
