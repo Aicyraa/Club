@@ -1,5 +1,5 @@
 import { Pool, type PoolConfig} from 'pg'
 
-export const pool = new Pool({
+export default new Pool({
    connectionString: String(process.env.CONNECTION_STRING)
 })
