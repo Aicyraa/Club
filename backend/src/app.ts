@@ -1,6 +1,7 @@
 import type { Express, Request, Response, NextFunction } from 'express'
-import type { CustomError } from './types'
+import type { RequestError } from './types'
 import express from 'express'
+import AppError from './error/appError'
 import { generalLimiter } from './middlewares/rateLimiter'
 import { errorHandler } from './middlewares/errorHandler'
 
@@ -12,8 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(generalLimiter)
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-   const error = new Error('Page Not Found') as CustomError;
-   error.status = 404;
+   const error = new AppError('Page Not Found',  404) as RequestError;
    next(error); 
 })
 

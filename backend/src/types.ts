@@ -1,3 +1,4 @@
+import AppError from '@/error/appError'
 
 export interface Message {
    id: number
@@ -15,6 +16,8 @@ export interface User {
    membershipStatus: 'member' | null  
 }
 
-export interface CustomError extends Error {
-   status: number 
+export interface RequestError extends AppError {
+   statusCode: number
+   status: string
+   isOperational: boolean
 }
