@@ -1,12 +1,12 @@
 import type { Request, Response, NextFunction } from 'express'
-import type { User } from '../types'
+import type { RequestWithBody ,User } from '../types'
 
 import bcrypt from 'bcryptjs'
 import { validationResult, matchedData } from 'express-validator'
 import { addUser } from '../models/query'
 
 export const postUser = async (
-   req: Request<{}, {}, User>,
+   req: RequestWithBody<User>,
    res: Response,
    next: NextFunction,
 ) => {
@@ -25,6 +25,6 @@ export const postUser = async (
 
       return res.status(201).json({ status: 201, message: 'User created.' })
    } catch (error) {
-      return next(error)
+     return next(error) 
    }
 }

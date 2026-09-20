@@ -23,12 +23,15 @@
     "express-validator": "^7.3.2",
     "helmet": "^8.3.0",
     "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
     "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
     "@types/node": "^22.20.4",
+    "@types/passport": "^1.0.17",
     "@types/pg": "^8.23.1",
     "nodemon": "^3.1.14",
     "tsc-alias": "^1.9.5",

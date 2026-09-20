@@ -1,7 +1,7 @@
 import type { QueryResultRow, QueryResult } from 'pg'
-import type { User, Message } from '../types'
+import type { User, Message } from '@custom-types'
 import pool from './pool'
-import { mapPgError } from '../error/dbError'
+import { mapPgError } from '@error/dbError'
 
 export const query = async <T extends QueryResultRow>(
    text: string,
