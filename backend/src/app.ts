@@ -6,6 +6,9 @@ import AppError from "./error/appError";
 import { generalLimiter } from "./middlewares/rateLimiter";
 import { errorHandler } from "./middlewares/errorHandler";
 import { signup } from "./routes/signupRoute";
+import { login } from "./routes/loginRoute";
+import { users } from "./routes/usersRoute";
+import { messages } from "./routes/messagesRoute";
 
 const PORT = process.env.PORT;
 const app: Express = express();
@@ -16,6 +19,9 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(generalLimiter);
 
 app.use("/signup", signup);
+app.use("/login", login);
+app.use("/users", users);
+app.use("/messages", messages);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new AppError("Page Not Found", 404) as RequestError;

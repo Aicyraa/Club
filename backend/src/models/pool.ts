@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-const connectionString = process.env.CONNECTION_STRING;
+const connectionString = String(process.env.CONNECTION_STRING);
 
 if (!connectionString) {
   throw new Error("CONNECTION_STRING environment variable is not set.");

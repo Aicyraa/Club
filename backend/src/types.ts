@@ -10,6 +10,8 @@ export interface User {
   password: string;
 }
 
+export type PublicUser = Omit<User, "password">;
+
 export interface Message {
   id: number;
   title: string;
@@ -17,6 +19,18 @@ export interface Message {
   createdAt: Date;
   author: string;
 }
+
+export interface DbErrorDetails {
+   code?: string;
+   constraint?: string;
+   detail?: string;
+   hint?: string;
+   table?: string;
+   column?: string;
+   schema?: string;
+   routine?: string;
+ }
+ 
 
 export interface RequestError extends AppError {
   statusCode: number;

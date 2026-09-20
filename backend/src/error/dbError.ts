@@ -1,15 +1,5 @@
 import AppError from "./appError";
-
-export interface DbErrorDetails {
-  code?: string;
-  constraint?: string;
-  detail?: string;
-  hint?: string;
-  table?: string;
-  column?: string;
-  schema?: string;
-  routine?: string;
-}
+import { DbErrorDetails } from "@/types";
 
 export class DbError extends AppError {
   code?: string;

@@ -2,7 +2,7 @@
 
 A club membership web app — an early-stage monorepo with a TypeScript/Express + PostgreSQL backend and a React + Vite frontend.
 
-> **Status:** early development. The backend has signup scaffolding; the frontend is a bare starter. The two are not yet wired together.
+> **Status:** early development. The backend has signup, login, user, and message routes; the frontend is a bare starter. The two are not yet wired together.
 
 ## Tech Stack
 
@@ -21,11 +21,11 @@ Club/
 ├── backend/
 │   └── src/
 │       ├── app.ts                    # Express entry point
-│       ├── types.ts                  # User, Message, RequestError
-│       ├── routes/signupRoute.ts     # POST /signin
-│       ├── controllers/signupController.ts
+│       ├── types.ts                  # User, PublicUser, Message, RequestError
+│       ├── routes/                   # signup, login, users, messages
+│       ├── controllers/              # signup, login, users, messages
 │       ├── models/pool.ts            # pg Pool from CONNECTION_STRING
-│       ├── models/query.ts           # addUser INSERT
+│       ├── models/query.ts           # user + message queries
 │       ├── middlewares/              # errorHandler, formValidator, rateLimiter
 │       └── error/appError.ts         # AppError class
 └── frontend/
@@ -100,10 +100,15 @@ npm run test:frontend  # frontend only
 
 ## API
 
-| Method | Path      | Description                                                         |
-| ------ | --------- | ------------------------------------------------------------------- |
-| `POST` | `/signin` | Register a user (hashes password with bcrypt, inserts into `users`) |
-| `*`    | catch-all | 404 handler                                                         |
+| Method | Path          | Description                                                         |
+| ------ | ------------- | ------------------------------------------------------------------- |
+| `POST` | `/signup`     | Register a user (hashes password with bcrypt, inserts into `users`) |
+| `POST` | `/login`      | Authenticate a user (verifies email + bcrypt password)              |
+| `GET`  | `/users`      | List all users (password excluded)                                  |
+| `GET`  | `/users/:id`  | Get a single user by id                                             |
+| `POST` | `/messages`   | Create a message                                                    |
+| `GET`  | `/messages`   | List all messages (newest first)                                    |
+| `*`    | catch-all     | 404 handler                                                         |
 
 All responses follow the shape `{ success: boolean, error?: { statusCode, message } }`.
 
@@ -116,7 +121,6 @@ All responses follow the shape `{ success: boolean, error?: { statusCode, messag
 
 ## Roadmap
 
-- Mount the signup route and finish the controller (success response, awaited insert).
-- Add login and messaging features (types and validation stubs already exist).
+- Add sessions/auth (passport + express-session are already installed).
+- Add a DB schema/migration for the `users` and `messages` tables.
 - Connect the frontend to the backend (API client + Vite proxy).
-- Add a DB schema/migration for the `users` table.
