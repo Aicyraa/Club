@@ -5,4 +5,4 @@ import { formLimiter } from "../middlewares/rateLimiter";
 
 export const signup = Router();
 
-signup.post("/signup", formLimiter, signinForm, postUser);
+signup.post("/user", formLimiter, signinForm, postUser);

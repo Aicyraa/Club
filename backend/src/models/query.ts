@@ -1,7 +1,7 @@
 import type { QueryResultRow, QueryResult } from 'pg'
 import type { User, Message } from '../types'
 import pool from './pool'
-import AppError from '../error/appError'
+import { mapPgError } from '../error/dbError'
 
 export const query = async <T extends QueryResultRow>(
    text: string,
@@ -9,8 +9,8 @@ export const query = async <T extends QueryResultRow>(
 ): Promise<QueryResult<T>> => {
    try {
       return await pool.query<T>(text, params)
-   } catch {
-      throw new AppError('Database query failed.', 500)
+   } catch (error) {
+      throw mapPgError(error)
    }
 }
 
