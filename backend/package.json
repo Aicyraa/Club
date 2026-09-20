@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "nodemon --watch src --ext ts,json --exec tsx ./src/app.ts",
     "build": "tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
-    "start": "node ./dist/app.js",
-    "test": "vitest run"
+    "start": "node ./dist/app.js"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +31,6 @@
     "nodemon": "^3.1.14",
     "tsc-alias": "^1.9.5",
     "tsx": "^4.23.13",
-    "typescript": "^7.0.2",
-    "vitest": "^5.0.1"
+    "typescript": "^7.0.2"
   }
 }

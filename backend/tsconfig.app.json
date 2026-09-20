@@ -3,7 +3,7 @@
     "target": "es2023",
     "module": "commonjs",
     "lib": ["ES2023"],
-    "types": ["node", "express", "pg", "vitest/globals"],
+    "types": ["node", "express", "pg"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
