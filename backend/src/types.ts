@@ -1,19 +1,21 @@
 import AppError from "@/error/appError";
 
-export interface Message {
-  id: number;
-  author: string;
-  title: string;
-  message: string;
-  date: Date;
-}
-
 export interface User {
   id: number;
-  firstname: string;
-  lastname: string;
+  email: string;
+  username: string;
+  avatarUrl: string | null;
+  isMember: boolean;
+  isAdmin: boolean;
   password: string;
-  membershipStatus: "member" | null;
+}
+
+export interface Message {
+  id: number;
+  title: string;
+  message: string;
+  createdAt: Date;
+  author: string;
 }
 
 export interface RequestError extends AppError {

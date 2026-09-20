@@ -1,30 +1,30 @@
-import type { Request, Response, NextFunction } from "express";
-import type { User } from "../types";
+import type { Request, Response, NextFunction } from 'express'
+import type { User } from '../types'
 
-import bcrypt from "bcryptjs";
-import { validationResult, matchedData } from "express-validator";
-import { addUser } from "../models/query";
+import bcrypt from 'bcryptjs'
+import { validationResult, matchedData } from 'express-validator'
+import { addUser } from '../models/query'
 
 export const postUser = async (
-  req: Request<{}, {}, User>,
-  res: Response,
-  next: NextFunction,
+   req: Request<{}, {}, User>,
+   res: Response,
+   next: NextFunction,
 ) => {
-  const errors = validationResult(req);
+   const errors = validationResult(req)
 
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ status: 400, errors: errors.array() });
-  }
+   if (!errors.isEmpty()) {
+      return res.status(400).json({ status: 400, errors: errors.array() })
+   }
 
-  try {
-    const data = matchedData(req) as User;
-    const saltRounds = 10;
-    const hashedPass = await bcrypt.hash(data.password, saltRounds);
+   try {
+      const data: User = matchedData(req)
+      const saltRounds = 10
+      const hashedPass = await bcrypt.hash(data.password, saltRounds)
 
-    await addUser({ ...data, password: hashedPass } as User);
+      await addUser({ ...data, password: hashedPass } as User)
 
-    return res.status(201).json({ status: 201, message: "User created." });
-  } catch (error) {
-    return next(error);
-  }
-};
+      return res.status(201).json({ status: 201, message: 'User created.' })
+   } catch (error) {
+      return next(error)
+   }
+}
