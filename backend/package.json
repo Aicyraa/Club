@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "dev": "dotenv -- nodemon --watch src --ext ts,json --exec tsx ./src/app.ts",
-    "build": "tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
+    "dev": "dotenv -- nodemon --watch src --ext ts,json --exec \"tsx --tsconfig ./tsconfig.node.json ./src/app.ts\"",
+    "build": "rm -rf ./dist && tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
     "start": "dotenv -- node ./dist/app.js"
   },
   "keywords": [],

@@ -8,8 +8,7 @@ export const errorHandler = (
    res: Response,
    next: NextFunction,
 ) => {
-   console.error(err)
-
+   console.error(`Error: ${err.message}, Status Code: ${err.statusCode}, Status: ${err.status}, Is Operational: ${err.isOperational}`,)
    const statusCode = err.statusCode || 500
    const isDev = process.env.ENVIRONMENT === 'DEV'
    const message =

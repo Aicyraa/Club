@@ -17,7 +17,6 @@
          "@custom-types": ["./src/types.ts"]
       },
       "rootDir": "./src",
-      "outDir": "./dist"
    },
    "include": ["src/**/*.ts"],
    "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
