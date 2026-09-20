@@ -5,14 +5,14 @@ vi.mock("bcryptjs", () => ({
   default: { hash: vi.fn() },
 }));
 
-vi.mock("../models/query", () => ({
+vi.mock("../../src/models/query", () => ({
   addUser: vi.fn(),
 }));
 
 import bcrypt from "bcryptjs";
-import { addUser } from "../models/query";
-import { signinForm } from "../middlewares/formValidator";
-import { postUser } from "./signupController";
+import { addUser } from "../../src/models/query";
+import { signinForm } from "../../src/middlewares/formValidator";
+import { postUser } from "../../src/controllers/signupController";
 
 const validBody = {
   email: "user@example.com",
