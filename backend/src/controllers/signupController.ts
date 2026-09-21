@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import type { RequestWithBody ,User } from '../types'
+import type { RequestWithBody ,User } from '@custom-types/type'
 
 import bcrypt from 'bcryptjs'
 import { validationResult, matchedData } from 'express-validator'

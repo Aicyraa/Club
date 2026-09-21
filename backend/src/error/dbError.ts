@@ -1,5 +1,5 @@
 import AppError from '@error/appError'
-import { DbErrorDetails } from '@custom-types'
+import { DbErrorDetails } from '../types/type'
 
 export class DbError extends AppError {
    code?: string

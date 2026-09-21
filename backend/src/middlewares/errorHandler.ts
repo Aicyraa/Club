@@ -1,4 +1,4 @@
-import type { RequestError } from '@custom-types'
+import type { RequestError } from '@custom-types/type'
 import { DbError } from '@error/dbError'
 import type { Request, Response, NextFunction } from 'express'
 
