@@ -3,7 +3,7 @@
       "target": "es2023",
       "module": "esnext",
       "lib": ["ES2023"],
-      "types": ["node", "express", "pg", "express-session", "passport"],
+      "types": ["node", "express", "pg", "express-session", "passport", "passport-local"],
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
@@ -14,9 +14,9 @@
          "@models/*": ["./src/models/*"],
          "@routes/*": ["./src/routes/*"],
          "@controllers/*": ["./src/controllers/*"],
-         "@custom-types": ["./src/types.ts"]
+         "@custom-types/*": ["./src/types/*"]
       },
-      "rootDir": "./src",
+      "rootDir": "./src"
    },
    "include": ["src/**/*.ts"],
    "exclude": ["dist", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
