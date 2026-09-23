@@ -55,7 +55,7 @@ const Signup = () => {
             <div className="group">
                <label htmlFor="email"> Email </label>
                <input
-                  {...register('email', { required: 'Email is required!', minLength: 5 })}
+                  {...register('email', { required: 'Invalid email!', minLength: 5 })}
                   placeholder="e.g John Doe"
                   className="border p-2 rounded-sm"
                />
@@ -65,7 +65,7 @@ const Signup = () => {
             <div className="group">
                <label htmlFor="username"> Username </label>
                <input
-                  {...register('username', { required: true, minLength: 3 })}
+                  {...register('username', { required: 'Invalid username!', minLength: 3 })}
                   type="text"
                   name="username"
                   className="border p-2 rounded-sm"
@@ -79,7 +79,7 @@ const Signup = () => {
                <label htmlFor="password"> Password </label>
                <div className="password">
                   <input
-                     {...register('email', { required: true })}
+                     {...register('password', { required: 'Invalid password!' })}
                      type={showPassword ? 'text' : 'password'}
                      className="border p-2 rounded-sm"
                   />
