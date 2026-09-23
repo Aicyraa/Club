@@ -40,8 +40,8 @@ app.use(passport.session())
 app.use(express.json({ limit: '10kb' }))
 app.use(express.urlencoded({ extended: true, limit: '10kb' }))
 
-app.use('/signup', signup)
-app.use('/login', login)
+app.use('/api/v1/signup', signup)
+app.use('/api/v1/login', login)
 
 app.use(unknownPage)
 app.use(errorHandler)
