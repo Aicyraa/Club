@@ -2,7 +2,7 @@ import { body } from 'express-validator'
 
 export const signinForm = [
    body('email').trim().isEmail().withMessage('Email is invalid.'),
-   body('username').trim().escape().isString().notEmpty().withMessage('Lastname is empty.'),
+   body('username').trim().escape().isString().notEmpty().withMessage('Username is empty.'),
    body('password')
       .trim()
       .isString()
