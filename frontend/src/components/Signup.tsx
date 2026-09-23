@@ -27,7 +27,7 @@ const Signup = () => {
    const save = async (data: SignupFields) => {
       try {
          setSignUpStatus(prev => ({ ...prev, isLoading: true }))
-         const response = await axios.post<SignupFields>('/api/signup', data)
+         const response = await axios.post<SignupFields>('/api/v1/signup', data)
          return setSignUpStatus(prev => ({
             ...prev,
             isLoading: false,
