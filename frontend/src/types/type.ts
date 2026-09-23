@@ -4,4 +4,4 @@ export interface SignupFields {
    password: string
 }
 
-export type LoginFiels = Omit<SignupFields, 'email'> 
+export type LoginFields = Omit<SignupFields, 'email'> 
