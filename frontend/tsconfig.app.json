@@ -10,7 +10,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
-      "@custom-type/*": ["./src/types/*"],
+      "@custom-types/*": ["./src/types/*"],
     },
 
     /* Bundler mode */
