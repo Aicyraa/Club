@@ -1,4 +1,4 @@
-import type { SignupFields } from '@custom-type/type'
+import type { SignupFields } from '@custom-types/type'
 import { useState } from 'react'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
@@ -24,7 +24,7 @@ const Signup = () => {
       isLoading: false,
    })
 
-   const save = async (data: SignupFields) => {
+   const signup = async (data: SignupFields) => {
       try {
          setSignUpStatus(prev => ({ ...prev, isLoading: true }))
          const response = await axios.post<SignupFields>('/api/v1/signup', data)
@@ -49,7 +49,7 @@ const Signup = () => {
          {signUpStatus.isLoading ? <span className="text-2xl"> ...Loading </span> : ''}
 
          <form
-            onSubmit={handleSubmit(save)}
+            onSubmit={handleSubmit(signup)}
             className="flex border-2 border-black flex-col gap-4 p-4"
          >
             <div className="group">
