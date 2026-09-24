@@ -13,7 +13,7 @@ export const signinForm = [
 ]
 
 export const loginForm = [
-   body('username').trim().escape().isString().notEmpty().withMessage('Username is required.'),
+   body('username').trim().escape().isString().notEmpty().withMessage('Username is empty.'),
    body('password')
       .trim()
       .isString()
