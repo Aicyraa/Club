@@ -1,8 +1,9 @@
 import type { SignupFields } from '@custom-types/type'
 import { useState } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeClosed } from 'lucide-react'
+import { redirect } from 'react-router-dom'
 
 const Signup = () => {
    const {
@@ -18,36 +19,22 @@ const Signup = () => {
    })
 
    const [showPassword, setShowPassword] = useState(false)
-   const [signUpStatus, setSignUpStatus] = useState({
-      success: false,
-      message: '',
-      isLoading: false,
-   })
 
    const signup = async (data: SignupFields) => {
       try {
-         setSignUpStatus(prev => ({ ...prev, isLoading: true }))
-         const response = await axios.post<SignupFields>('/api/v1/signup', data)
-         return setSignUpStatus(prev => ({
-            ...prev,
-            isLoading: false,
-            success: true,
-            message: response.data.username,
-         }))
-      } catch (error) {
-         setSignUpStatus(prev => ({
-            ...prev,
-            isLoading: false,
-            success: false,
-            message: 'Error message',
-         }))
+         axios.post<SignupFields>('/api/v1/signup', data)
+         return redirect('/login')
+      } catch (error: AxiosError | unknown) {
+         if (axios.isAxiosError(error)) {
+            console.log(error.response?.data)
+         } else {
+            console.log(error)
+         }
       }
    }
 
    return (
       <>
-         {signUpStatus.isLoading ? <span className="text-2xl"> ...Loading </span> : ''}
-
          <form
             onSubmit={handleSubmit(signup)}
             className="flex border-2 border-black flex-col gap-4 p-4"
@@ -88,7 +75,7 @@ const Signup = () => {
                   </span>
                </div>
                {errors.password && (
-                  <span className="bg-red-600"> {errors.password.message } </span>
+                  <span className="bg-red-600"> {errors.password.message} </span>
                )}
             </div>
             <button type="submit"> Sign Up! </button>
