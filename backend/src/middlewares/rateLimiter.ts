@@ -10,7 +10,7 @@ export const generalLimiter = rateLimit({
 
 export const formLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 30,
+  max: 3,
   standardHeaders: true,
   legacyHeaders: false,
   message: "Too many form submissions, please try again later.",
