@@ -4,9 +4,9 @@ export interface User {
    userid: string
    email: string
    username: string
-   avatarUrl: string | null
-   isMember: boolean
-   isAdmin: boolean
+   avatarurl: string | null
+   ismember: boolean
+   isadmin: boolean
    password: string
 }
 
@@ -18,17 +18,6 @@ export interface Message {
    message: string
    createdAt: Date
    author: string
-}
-
-export interface DbErrorDetails {
-   code?: string
-   constraint?: string
-   detail?: string
-   hint?: string
-   table?: string
-   column?: string
-   schema?: string
-   routine?: string
 }
 
 export interface RequestError extends AppError {

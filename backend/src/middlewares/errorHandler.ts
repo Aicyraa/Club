@@ -1,5 +1,4 @@
 import type { RequestError } from '@custom-types/type'
-import { DbError } from '@error/dbError'
 import type { Request, Response, NextFunction } from 'express'
 
 export const errorHandler = (
@@ -8,7 +7,9 @@ export const errorHandler = (
    res: Response,
    next: NextFunction,
 ) => {
-   console.error(`Error: ${err.message}, Status Code: ${err.statusCode}, Status: ${err.status}, Is Operational: ${err.isOperational}`,)
+   console.error(
+      `Error: ${err.message}, Status Code: ${err.statusCode}, Status: ${err.status}, Is Operational: ${err.isOperational}, Trace: ${err.stack}`,
+   )
    const statusCode = err.statusCode || 500
    const isDev = process.env.ENVIRONMENT === 'DEV'
    const message =
@@ -22,20 +23,6 @@ export const errorHandler = (
          statusCode,
          message,
       },
-   }
-
-   if (err instanceof DbError && isDev) {
-      body.error = {
-         ...(body.error as object),
-         details: {
-            code: err.code,
-            constraint: err.constraint,
-            table: err.table,
-            column: err.column,
-            detail: err.detail,
-            hint: err.hint,
-         },
-      }
    }
 
    res.status(statusCode).json(body)
