@@ -11,6 +11,7 @@ import { generalLimiter } from '@middlewares/rateLimiter'
 import { errorHandler } from '@middlewares/errorHandler'
 import { signup } from '@routes/signupRoute'
 import { login } from '@routes/loginRoute'
+import { logout } from '@routes/logoutRoute'
 import { authenticate } from '@routes/authenticate'
 
 const PORT = process.env.PORT
@@ -36,6 +37,7 @@ app.use(
       },
    }),
 )
+
 app.use(passport.session())
 
 app.use(express.json({ limit: '10kb' }))
@@ -44,6 +46,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }))
 app.use('/api/v1/me', authenticate)
 app.use('/api/v1/signup', signup)
 app.use('/api/v1/login', login)
+app.use('/api/v1/logout', logout)
 
 app.use(unknownPage)
 app.use(errorHandler)
