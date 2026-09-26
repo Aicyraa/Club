@@ -1,8 +1,8 @@
-import type { QueryResultRow, QueryResult } from 'pg'
-import type { User, Message } from '@custom-types/type'
-import { DatabaseError } from 'pg'
-import pool from './pool'
-import AppError from '@error/appError'
+import type { Message, User } from '@custom-types/type';
+import AppError from '@utils/appError';
+import type { QueryResult, QueryResultRow } from 'pg';
+import { DatabaseError } from 'pg';
+import pool from './pool';
 
 export const query = async <T extends QueryResultRow>(
    text: string,
@@ -40,7 +40,7 @@ export const getUserById = async (id: string) => {
    return await query(
       `
          SELECT * FROM users 
-         WHERE userid = $1 
+         WHERE user_id = $1 
       `,
       [id],
    )
