@@ -8,6 +8,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
+      "@context/*": ["./src/context/*"],
+      "@services/*": ["./src/services/*"],
+      "@error/*": ["./src/components/error/*"],
       "@custom-types/*": ["./src/types/*"],
     },
 
