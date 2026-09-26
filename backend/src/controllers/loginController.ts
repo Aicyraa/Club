@@ -1,9 +1,10 @@
-import type { Request, Response, NextFunction } from 'express'
 import type { RequestWithBody, User } from '@custom-types/type'
+import type { NextFunction, Request, Response } from 'express'
 
-import passport from 'passport'
+import AppError from '@utils/appError'
 import { validationResult } from 'express-validator'
-import AppError from '@error/appError'
+import passport from 'passport'
+import ResponseJson from '@utils/responseJson'
 
 interface LoginBody {
    username: string
@@ -18,7 +19,7 @@ export const postLogin = (
    const errors = validationResult(req)
 
    if (!errors.isEmpty()) {
-      next(new AppError(errors.array as unknown as string, 400))
+      return next(new AppError(errors.array as unknown as string, 400))
    }
 
    passport.authenticate('local', (err: unknown, user: Express.User | null) => {
@@ -27,7 +28,7 @@ export const postLogin = (
       }
 
       if (!user) {
-         next(new AppError('Invalid Credentials.', 401))
+         return next(new AppError('Invalid Credentials.', 401))
       }
 
       req.logIn(user as User, (loginErr: unknown) => {
@@ -36,7 +37,7 @@ export const postLogin = (
          }
 
          const { password: _password, ...publicUser } = user as unknown as User
-         return res.status(200).json({ success: true, status: 200, user: publicUser })
+         return res.status(200).json(new ResponseJson('Logged In', 200, publicUser))
       })
    })(req, res, next)
 }

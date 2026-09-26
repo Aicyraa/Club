@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import AppError from '@error/appError'
+import AppError from '@utils/appError'
 import type { RequestError } from '@custom-types/type'
 
 export const unknownPage = (req: Request, res: Response, next: NextFunction) => {

@@ -1,10 +1,10 @@
-import type { Request, Response, NextFunction } from 'express'
-import type { RequestWithBody, User } from '@custom-types/type'
+import type { RequestWithBody, User } from '@custom-types/type';
+import type { NextFunction, Request, Response } from 'express';
 
-import bcrypt from 'bcryptjs'
-import { validationResult, matchedData } from 'express-validator'
-import { addUser } from '../models/query'
-import AppError from '@error/appError'
+import { addUser } from '@models/query';
+import AppError from '@utils/appError';
+import bcrypt from 'bcryptjs';
+import { matchedData, validationResult } from 'express-validator';
 
 export const postUser = async (
    req: RequestWithBody<User>,
