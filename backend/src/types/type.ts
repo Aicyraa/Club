@@ -1,12 +1,12 @@
-import AppError from '@error/appError'
+import AppError from '../utils/appError'
 
 export interface User {
-   userid: string
+   user_id: string
    email: string
    username: string
-   avatarurl: string | null
-   ismember: boolean
-   isadmin: boolean
+   avatar_url: string | null
+   is_member: boolean
+   is_admin: boolean
    password: string
 }
 
