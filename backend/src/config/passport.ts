@@ -29,7 +29,7 @@ export const localStrategy = new LocalStrategyClass(
 )
 
 export const serializeCb = async (user: User, done: (err: unknown, id?: string) => void) => {
-   done(null, user.userid)
+   done(null, user.user_id)
 }
 
 export const deserializeCb = async (
