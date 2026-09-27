@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from 'express'
 import AppError from '@utils/appError'
 import { validationResult } from 'express-validator'
 import passport from 'passport'
-import ResponseJson from '@utils/responseJson'
+import ApiResponse from '@utils/ApiResponse'
 
 interface LoginBody {
    username: string
@@ -37,7 +37,7 @@ export const postLogin = (
          }
 
          const { password: _password, ...publicUser } = user as unknown as User
-         return res.status(200).json(new ResponseJson('Logged In', 200, publicUser))
+         return res.status(200).json(new ApiResponse('Logged In', 200, publicUser))
       })
    })(req, res, next)
 }
