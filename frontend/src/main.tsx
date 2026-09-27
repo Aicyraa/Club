@@ -1,11 +1,14 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
-import "./index.css";
-import route from "./route.tsx";
+import './index.css'
+import { UserProvider } from '@context/UserContext'
+import route from './route.tsx'
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-      <RouterProvider router={route} />
-  </StrictMode>,
-);
+createRoot(document.getElementById('root')!).render(
+   <StrictMode>
+      <UserProvider>
+         <RouterProvider router={route} />
+      </UserProvider>
+   </StrictMode>
+)
