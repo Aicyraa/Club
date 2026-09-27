@@ -1,4 +1,5 @@
-import type { RequestWithBody, User } from '@custom-types/type';
+import type { RequestWithBody } from '@custom-types/type';
+import type { SignupFields, User } from '@repo/types';
 import type { NextFunction, Response } from 'express';
 
 import { addUser } from '@models/query';
@@ -7,14 +8,8 @@ import bcrypt from 'bcryptjs';
 import { matchedData, validationResult } from 'express-validator';
 import ApiResponse from '@utils/ApiResponse';
 
-interface SignupBody {
-   email: string,
-   username: string,
-   password: string,
-}
-
 export const postUser = async (
-   req: RequestWithBody<SignupBody>,
+   req: RequestWithBody<SignupFields>,
    res: Response,
    next: NextFunction,
 ) => {

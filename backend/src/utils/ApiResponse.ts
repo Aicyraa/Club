@@ -1,4 +1,6 @@
-export default class ApiResponse<T> {
+import type { ApiResponse as ApiResponseBody } from '@repo/types'
+
+export default class ApiResponse<T> implements ApiResponseBody<T> {
    success: boolean
    message: string
    statusCode: number

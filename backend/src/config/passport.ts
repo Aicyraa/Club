@@ -1,4 +1,4 @@
-import type { User } from '@custom-types/type'
+import type { User } from '@repo/types'
 import type { QueryResult } from 'pg'
 import passport from 'passport'
 import bcrypt from 'bcryptjs'

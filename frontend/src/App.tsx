@@ -1,6 +1,6 @@
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useUserContext } from './context/UserContext'
-import type { ApiReponse } from './types/type'
+import type { ApiResponse } from '@repo/types'
 import { useState, useEffect } from 'react'
 import api from '@services/setup'
 
@@ -10,7 +10,7 @@ function App() {
    const { user } = useUserContext()
 
    const logout = async () => {
-      const response = await api.get<ApiReponse>('/logout')
+      const response = await api.get<ApiResponse>('/logout')
       navigate('/login')
       alert(response.data.message)
    }

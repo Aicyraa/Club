@@ -1,4 +1,4 @@
-import type { ApiReponse, LoginFields, PublicUser } from '@custom-types/type'
+import type { ApiResponse, LoginFields, PublicUser } from '@repo/types'
 import { useForm } from 'react-hook-form'
 import { useUserContext } from '@context/UserContext'
 import InputError from '@error/InputError'
@@ -22,7 +22,7 @@ const Login = () => {
 
    const login = async (data: LoginFields) => {
       try {
-         const response = await api.post<ApiReponse<PublicUser>>('/login', data)
+         const response = await api.post<ApiResponse<PublicUser>>('/login', data)
          console.log(response.data.success, response.data.statusCode);
          
          if (response.data.success && response.data.statusCode === 200) {

@@ -1,4 +1,5 @@
-import type { RequestWithBody, User } from '@custom-types/type'
+import type { RequestWithBody } from '@custom-types/type'
+import type { LoginFields, User } from '@repo/types'
 import type { NextFunction, Request, Response } from 'express'
 
 import AppError from '@utils/appError'
@@ -6,13 +7,8 @@ import { validationResult } from 'express-validator'
 import passport from 'passport'
 import ApiResponse from '@utils/ApiResponse'
 
-interface LoginBody {
-   username: string
-   password: string
-}
-
 export const postLogin = (
-   req: RequestWithBody<LoginBody>,
+   req: RequestWithBody<LoginFields>,
    res: Response,
    next: NextFunction,
 ) => {

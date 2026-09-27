@@ -14,7 +14,8 @@
          "@models/*": ["./src/models/*"],
          "@routes/*": ["./src/routes/*"],
          "@controllers/*": ["./src/controllers/*"],
-         "@custom-types/*": ["./src/types/*"]
+         "@custom-types/*": ["./src/types/*"],
+         "@repo/types": ["../shared/types.d.ts"]
       },
       "rootDir": "./src"
    },

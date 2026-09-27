@@ -1,4 +1,4 @@
-import { User as CustomerUser } from './type'
+import type { User as CustomerUser } from '@repo/types'
 
 declare global {
    namespace Express {

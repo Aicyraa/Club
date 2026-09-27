@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
-import type { ApiReponse } from './types/type.ts'
+import type { ApiResponse } from '@repo/types'
 import api from '@services/setup.ts'
 import App from './App.tsx'
 import Signup from '@components/Signup.tsx'
@@ -8,7 +8,7 @@ import PageNotFound from './error/404.tsx'
 
 const isAuthenticated = async (): Promise<boolean | undefined> => {
    try {
-      const result = await api.get<ApiReponse>('/me')
+      const result = await api.get<ApiResponse>('/me')
       return result.data.success
    } catch (error: unknown) {
       if (error instanceof Error) {

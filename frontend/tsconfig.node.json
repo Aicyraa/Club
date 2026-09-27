@@ -12,6 +12,7 @@
       "@services/*": ["./src/services/*"],
       "@error/*": ["./src/components/error/*"],
       "@custom-types/*": ["./src/types/*"],
+      "@repo/types": ["../shared/types.d.ts"],
     },
 
     /* Bundler mode */

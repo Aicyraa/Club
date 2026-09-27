@@ -1,4 +1,5 @@
-import type { PublicUser, Children } from '@/types/type'
+import type { PublicUser } from '@repo/types'
+import type { Children } from '@custom-types/type'
 import React, { createContext, useContext, useState } from 'react'
 
 interface UserContextType {

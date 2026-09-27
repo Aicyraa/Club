@@ -1,4 +1,4 @@
-import type { Message, User } from '@custom-types/type';
+import type { User } from '@repo/types';
 import AppError from '@utils/appError';
 import type { QueryResult, QueryResultRow } from 'pg';
 import { DatabaseError } from 'pg';

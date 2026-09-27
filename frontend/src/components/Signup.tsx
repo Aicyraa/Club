@@ -1,4 +1,4 @@
-import type { SignupFields } from '@custom-types/type'
+import type { SignupFields } from '@repo/types'
 import axios, { AxiosError } from 'axios'
 import { Eye, EyeClosed } from 'lucide-react'
 import { useState } from 'react'
