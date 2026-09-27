@@ -1,4 +1,4 @@
-import ResponseJson from '@utils/responseJson'
+import ApiResponse from '@utils/ApiResponse'
 import AppError from '../utils/appError'
 import type { Request, Response, NextFunction } from 'express'
 
@@ -16,7 +16,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
       return next(new AppError('Unauthorized.', 401))
    }
 
-   return res.status(200).json(new ResponseJson('Authenticated', 200, req.user))
+   return res.status(200).json(new ApiResponse('Authenticated', 200, req.user))
 }
 
 export const destroySession = (req: Request, res: Response, next: NextFunction) => {
@@ -31,7 +31,7 @@ export const destroySession = (req: Request, res: Response, next: NextFunction) 
          }
 
          res.clearCookie('connect.sid')
-         res.status(200).json(new ResponseJson('Log Out Success', 200))
+         res.status(200).json(new ApiResponse('Log Out Success', 200))
       })
    })
 }
