@@ -1,8 +1,8 @@
 import type { SignupFields } from '@custom-types/type'
-import { useState } from 'react'
 import axios, { AxiosError } from 'axios'
-import { useForm } from 'react-hook-form'
 import { Eye, EyeClosed } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { redirect } from 'react-router-dom'
 
 const Signup = () => {
@@ -35,50 +35,45 @@ const Signup = () => {
 
    return (
       <>
-         <form
-            onSubmit={handleSubmit(signup)}
-            className="flex border-2 border-black flex-col gap-4 p-4"
-         >
-            <div className="group">
+         <form onSubmit={handleSubmit(signup)}>
+            <div>
                <label htmlFor="email"> Email </label>
                <input
                   {...register('email', { required: 'Invalid email!', minLength: 5 })}
                   placeholder="e.g John Doe"
-                  className="border p-2 rounded-sm"
+                  className="border"
                />
-               {errors.email && <span className="bg-red-600"> {errors.email.message} </span>}
+               {errors.email && <span> {errors.email.message} </span>}
             </div>
 
-            <div className="group">
+            <div>
                <label htmlFor="username"> Username </label>
                <input
                   {...register('username', { required: 'Invalid username!', minLength: 3 })}
                   type="text"
                   name="username"
-                  className="border p-2 rounded-sm"
+                  className="border"
                />
-               {errors.username && (
-                  <span className="bg-red-600"> {errors.username.message} </span>
-               )}
+               {errors.username && <span> {errors.username.message} </span>}
             </div>
 
             <div className="group">
                <label htmlFor="password"> Password </label>
-               <div className="password">
+               <div className="password flex">
                   <input
                      {...register('password', { required: 'Invalid password!' })}
                      type={showPassword ? 'text' : 'password'}
-                     className="border p-2 rounded-sm"
+                     className="border"
                   />
                   <span onClick={() => setShowPassword((value: boolean) => !value)}>
                      {showPassword ? <Eye /> : <EyeClosed />}
                   </span>
                </div>
-               {errors.password && (
-                  <span className="bg-red-600"> {errors.password.message} </span>
-               )}
+               {errors.password && <span> {errors.password.message} </span>}
             </div>
-            <button type="submit"> Sign Up! </button>
+            <button type="submit" className="bg-blue-200 pr-4 pl-4 pt-2 pb-2 rounded-10">
+               Sign Up!
+            </button>
          </form>
       </>
    )

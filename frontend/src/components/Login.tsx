@@ -1,11 +1,12 @@
-import type { LoginFields, User } from '@custom-types/type'
-import axios, { type AxiosError } from 'axios'
+import type { ApiReponse, LoginFields, PublicUser } from '@custom-types/type'
 import { useForm } from 'react-hook-form'
 import { useUserContext } from '@context/UserContext'
 import InputError from '@error/InputError'
-import { redirect } from 'react-router-dom'
+import api from '@services/setup'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+   const navigate = useNavigate()
    const { setUser } = useUserContext()
 
    const {
@@ -21,26 +22,24 @@ const Login = () => {
 
    const login = async (data: LoginFields) => {
       try {
-         const response = await axios.post<User>('/api/v1/login', data)
-         setUser(response.data)
-         redirect('/')
-      } catch (error: AxiosError | unknown) {
-         if (axios.isAxiosError(error)) {
-            console.log(error.response?.data)
-         } else {
-            console.log('An unexpected error occurred:', error)
+         const response = await api.post<ApiReponse<PublicUser>>('/login', data)
+         console.log(response.data.success, response.data.statusCode);
+         
+         if (response.data.success && response.data.statusCode === 200) {
+            setUser(response.data.data as PublicUser)
+            navigate('/')
          }
+      } catch (error: unknown) {
+         console.log(error)
       }
    }
 
    return (
       <>
-         <div className="h-full flex justify-center items-center flex-col ">
-            <h2 className="text-sky-950 text-4xl"> Login </h2>
-            <form
-               onSubmit={handleSubmit(login)}
-               className="flex flex-col w-1xl h-1/3 bg-amber-50 shadow-2xl rounded-2xl p-4"
-            >
+         <div>
+            <h2> Login Page </h2>
+            <hr />
+            <form onSubmit={handleSubmit(login)}>
                <div className="group">
                   <label htmlFor="username"> Username </label>
                   <input
@@ -52,7 +51,7 @@ const Login = () => {
                      <InputError message={errors.username.message as string} />
                   )}
                </div>
-               <div className="group">
+               <div>
                   <label htmlFor="passwod"> Password </label>
                   <input
                      type="text"
@@ -66,9 +65,8 @@ const Login = () => {
                      <InputError message={errors.username.message as string} />
                   )}
                </div>
-               <button type="submit" className="bg-sky-950 p-4 rounded-2xl w-full text">
-                  {' '}
-                  Login{' '}
+               <button type="submit" className="bg-blue-200 pr-4 pl-4 pt-2 pb-2 rounded-10">
+                  Login
                </button>
             </form>
          </div>
