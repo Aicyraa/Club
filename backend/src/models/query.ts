@@ -1,8 +1,8 @@
-import type { User } from '@repo/types';
-import AppError from '@utils/appError';
-import type { QueryResult, QueryResultRow } from 'pg';
-import { DatabaseError } from 'pg';
-import pool from './pool';
+import type { User } from '@repo/types'
+import AppError from '@utils/appError'
+import type { QueryResult, QueryResultRow } from 'pg'
+import { DatabaseError } from 'pg'
+import pool from './pool'
 
 export const query = async <T extends QueryResultRow>(
    text: string,
@@ -10,7 +10,7 @@ export const query = async <T extends QueryResultRow>(
 ): Promise<QueryResult<T>> => {
    try {
       return await pool.query<T>(text, params)
-   } catch (error: unknown ) {
+   } catch (error: unknown) {
       const errorDB = error as DatabaseError
       throw new AppError(errorDB.message, errorDB.code as unknown as number)
    }
@@ -19,10 +19,10 @@ export const query = async <T extends QueryResultRow>(
 export const addUser = async (user: User) => {
    return await query(
       `
-         INSERT INTO users (email, username, password)
-         VALUES ($1, $2, $3)
+         INSERT INTO users (email, username, password, avatar_url)
+         VALUES ($1, $2, $3, $4)
       `,
-      [user.email, user.username, user.password],
+      [user.email, user.username, user.password, user.avatar_url],
    )
 }
 
