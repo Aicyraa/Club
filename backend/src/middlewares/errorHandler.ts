@@ -12,7 +12,7 @@ export const errorHandler = (
       Trace: ${err.stack}
    `)
 
-   const statusCode = err.statusCode || 500
+   const statusCode = Number(err.statusCode) < 1000 ? err.statusCode : 500
    const isDev = process.env.ENVIRONMENT === 'DEV'
    const message =
       isDev || statusCode < 500
