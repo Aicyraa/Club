@@ -13,6 +13,7 @@ import { signup } from '@routes/signupRoute'
 import { login } from '@routes/loginRoute'
 import { logout } from '@routes/logoutRoute'
 import { authenticate } from '@routes/authenticate'
+import { messages } from '@routes/messageRoute'
 
 const PORT = process.env.PORT
 const SESSION_SECRET = process.env.SECRET || 'dev-secret'
@@ -47,6 +48,8 @@ app.use('/api/v1/me', authenticate)
 app.use('/api/v1/signup', signup)
 app.use('/api/v1/login', login)
 app.use('/api/v1/logout', logout)
+app.use('/api/v1/messages', messages)
+// app.use('/api/v1/profiles', profiles)
 
 app.use(unknownPage)
 app.use(errorHandler)
