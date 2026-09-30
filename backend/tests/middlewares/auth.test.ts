@@ -18,12 +18,12 @@ import {
 } from '../../src/config/passport'
 
 const user = {
-   userid: '59fb9ce4-c6ea-4cfd-bd54-9cb09afbf84d',
+   user_id: '59fb9ce4-c6ea-4cfd-bd54-9cb09afbf84d',
    email: 'user@example.com',
    username: 'alice',
-   avatarUrl: null,
-   isMember: false,
-   isAdmin: false,
+   avatar_url: null,
+   is_member: false,
+   is_admin: false,
    password: 'hashed-password',
 }
 
@@ -92,7 +92,7 @@ describe('serializeCb', () => {
          args = cb
       })
 
-      expect(args).toEqual([null, user.userid])
+      expect(args).toEqual([null, user.user_id])
    })
 })
 
@@ -101,11 +101,11 @@ describe('deserializeCb', () => {
       vi.mocked(getUserById).mockResolvedValue({ rowCount: 1, rows: [user] } as never)
 
       let args: unknown[] = []
-      await deserializeCb(user.userid, (...cb: unknown[]) => {
+      await deserializeCb(user.user_id, (...cb: unknown[]) => {
          args = cb
       })
 
-      expect(getUserById).toHaveBeenCalledWith(user.userid)
+      expect(getUserById).toHaveBeenCalledWith(user.user_id)
       expect(args).toEqual([null, user])
    })
 
@@ -125,7 +125,7 @@ describe('deserializeCb', () => {
       vi.mocked(getUserById).mockRejectedValue(dbError)
 
       const args = await new Promise<unknown[]>(resolve => {
-         deserializeCb(user.userid, (...cb: unknown[]) => resolve(cb))
+         deserializeCb(user.user_id, (...cb: unknown[]) => resolve(cb))
       })
 
       expect(args).toEqual([dbError])

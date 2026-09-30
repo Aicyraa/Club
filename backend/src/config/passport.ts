@@ -28,7 +28,13 @@ export const localStrategy = new LocalStrategyClass(
    },
 )
 
-export const serializeCb = async (user: User, done: (err: unknown, id?: string) => void) => {
+/**
+ * Typed against `Express.User` (which is `PublicUser` in this repo) because that
+ * is what @types/passport's serializeUser overload declares. Narrowing it to the
+ * local `User` — which carries `password` — makes the callback unassignable and
+ * the build fails.
+ */
+export const serializeCb = (user: Express.User, done: (err: unknown, id?: unknown) => void) => {
    done(null, user.user_id)
 }
 

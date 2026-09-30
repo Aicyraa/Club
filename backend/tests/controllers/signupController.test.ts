@@ -48,10 +48,8 @@ describe("postUser", () => {
 
     await postUser(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({ status: 400, errors: expect.any(Array) }),
-    );
+    expect(next).toHaveBeenCalledWith(expect.objectContaining({ statusCode: 400 }));
+    expect(res.status).not.toHaveBeenCalled();
     expect(addUser).not.toHaveBeenCalled();
   });
 
@@ -67,11 +65,13 @@ describe("postUser", () => {
       email: "user@example.com",
       username: "alice",
       password: "hashed-password",
+      avatar_url: "https://api.dicebear.com/10.x/lorelei/svg?seed=user-alice",
     });
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith({
-      status: 201,
-      message: "User created.",
+      success: true,
+      statusCode: 201,
+      message: "User Created",
     });
     expect(next).not.toHaveBeenCalled();
   });

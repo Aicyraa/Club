@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { postUser } from '@controllers/signupController'
 import { signinForm } from '@middlewares/formValidator'
-import { formLimiter } from '@middlewares/rateLimiter'
+import { signupLimiter } from '@middlewares/rateLimiter'
 
 export const signup = Router()
 
-signup.post('/', formLimiter, signinForm, postUser)
+signup.post('/', signupLimiter, signinForm, postUser)

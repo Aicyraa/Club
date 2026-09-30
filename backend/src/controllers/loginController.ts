@@ -15,7 +15,7 @@ export const postLogin = (
    const errors = validationResult(req)
 
    if (!errors.isEmpty()) {
-      return next(new AppError(errors.array as unknown as string, 400))
+      return next(new AppError(errors.array()[0]?.msg as string, 400))
    }
 
    passport.authenticate('local', (err: unknown, user: Express.User | null) => {

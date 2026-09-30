@@ -7,9 +7,9 @@ export default class ApiResponse<T> implements ApiResponseBody<T> {
    data?: T
 
    constructor(message: string, statusCode: number, data?: T) {
-      ;((this.success = true),
-         (this.message = message),
-         (this.statusCode = statusCode),
-         (this.data = data))
+      this.success = true
+      this.message = message
+      this.statusCode = statusCode
+      this.data = data
    }
 }

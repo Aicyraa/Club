@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { destroySession } from '@middlewares/auth'
+import { destroySession, requireAuth } from '@middlewares/auth'
 
 export const logout = Router()
 
-logout.get('/', destroySession)
+logout.post('/', requireAuth, destroySession)

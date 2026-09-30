@@ -14,12 +14,12 @@ import { postLogin } from '../../src/controllers/loginController'
 const validBody = { username: 'alice', password: 'secret123' }
 
 const user = {
-   userid: '59fb9ce4-c6ea-4cfd-bd54-9cb09afbf84d',
+   user_id: '59fb9ce4-c6ea-4cfd-bd54-9cb09afbf84d',
    email: 'user@example.com',
    username: 'alice',
-   avatarUrl: null,
-   isMember: false,
-   isAdmin: false,
+   avatar_url: null,
+   is_member: false,
+   is_admin: false,
    password: 'hashed-password',
 }
 
@@ -61,12 +61,9 @@ describe('postLogin', () => {
 
       await postLogin(req, res, next)
 
-      expect(res.status).toHaveBeenCalledWith(400)
-      expect(res.json).toHaveBeenCalledWith(
-         expect.objectContaining({ status: 400, success: false, errors: expect.any(Array) }),
-      )
+      expect(next).toHaveBeenCalledWith(expect.objectContaining({ statusCode: 400 }))
+      expect(res.status).not.toHaveBeenCalled()
       expect(authMock).not.toHaveBeenCalled()
-      expect(next).not.toHaveBeenCalled()
    })
 
    it('returns 401 with a generic message for bad credentials', async () => {
@@ -77,14 +74,11 @@ describe('postLogin', () => {
       await postLogin(req, res, next)
       authCb?.(null, false)
 
-      expect(res.status).toHaveBeenCalledWith(401)
-      expect(res.json).toHaveBeenCalledWith({
-         status: 401,
-         success: false,
-         message: 'Invalid credentials.',
-      })
+      expect(next).toHaveBeenCalledWith(
+         expect.objectContaining({ statusCode: 401, message: 'Invalid Credentials.' }),
+      )
+      expect(res.status).not.toHaveBeenCalled()
       expect((req as Request & { logIn: ReturnType<typeof vi.fn> }).logIn).not.toHaveBeenCalled()
-      expect(next).not.toHaveBeenCalled()
    })
 
    it('logs the user in and returns the public user on success', async () => {
@@ -105,9 +99,9 @@ describe('postLogin', () => {
       expect(res.status).toHaveBeenCalledWith(200)
       expect(res.json).toHaveBeenCalledWith(
          expect.objectContaining({
-            status: 200,
+            statusCode: 200,
             success: true,
-            user: expect.not.objectContaining({ password: expect.anything() }),
+            data: expect.not.objectContaining({ password: expect.anything() }),
          }),
       )
       expect(next).not.toHaveBeenCalled()

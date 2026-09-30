@@ -38,7 +38,7 @@ describe("signinForm", () => {
     });
 
     expect(result.isEmpty()).toBe(false);
-    expect(result.array().some((e) => e.msg === "Lastname is empty.")).toBe(true);
+    expect(result.array().some((e) => e.msg === "Username is empty.")).toBe(true);
   });
 
   it("rejects a password shorter than 6 characters", async () => {

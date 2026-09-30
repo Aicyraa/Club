@@ -10,12 +10,42 @@ export interface User {
 
 export type PublicUser = Omit<User, 'password'>
 
+export type Role = 'normal' | 'member' | 'admin'
+
+/**
+ * The subset of a user that is safe to expose alongside a message. The backend
+ * nulls every field for `normal` viewers, so `author: null` on a Message means
+ * "render this as Anonymous" — never "we forgot to join".
+ */
+export interface MessageAuthor {
+   user_id: string
+   username: string
+   avatar_url: string | null
+}
+
 export interface Message {
-   id: number
+   message_id: number
    title: string
    message: string
-   createdAt: Date
-   author: string
+   /** ISO 8601 string. It arrives as JSON, so it is not a `Date`. */
+   created_at: string
+   is_anonymous: boolean
+   /** Null when the viewer is `normal`, or when the author is hidden. */
+   author: MessageAuthor | null
+   can_delete: boolean
+}
+
+export interface Paginated<T> {
+   items: T[]
+   total: number
+   page: number
+   pageLimit: number
+   totalPages: number
+}
+
+export interface Profile extends PublicUser {
+   messageCount: number
+   role: Role
 }
 
 export interface SignupFields {
