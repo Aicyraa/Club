@@ -1,18 +1,43 @@
 import type { ApiResponse, LoginFields, PublicUser } from '@repo/types'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useUserContext } from '@context/UserContext'
-import InputError from '@error/InputError'
+import { Link, useNavigate } from 'react-router-dom'
+import { Eye, EyeOff, LockKeyhole, LogIn, UserRound } from 'lucide-react'
+
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
+import {
+   Card,
+   CardContent,
+   CardDescription,
+   CardFooter,
+   CardHeader,
+   CardTitle,
+} from '@/components/ui/card'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import {
+   InputGroup,
+   InputGroupAddon,
+   InputGroupButton,
+   InputGroupInput,
+} from '@/components/ui/input-group'
+import { Separator } from '@/components/ui/separator'
+import { Spinner } from '@/components/ui/spinner'
+import AuthShell from '@components/AuthShell'
+import { useUserContext } from '@context/userContext'
+import { getApiErrorMessage } from '@services/setup'
 import api from '@services/setup'
-import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const Login = () => {
    const navigate = useNavigate()
    const { setUser } = useUserContext()
+   const [showPassword, setShowPassword] = useState(false)
+   const [serverError, setServerError] = useState<string | null>(null)
 
    const {
       register,
       handleSubmit,
-      formState: { errors },
+      formState: { errors, isSubmitting },
    } = useForm<LoginFields>({
       defaultValues: {
          username: '',
@@ -21,56 +46,119 @@ const Login = () => {
    })
 
    const login = async (data: LoginFields) => {
+      setServerError(null)
+
       try {
          const response = await api.post<ApiResponse<PublicUser>>('/login', data)
-         console.log(response.data.success, response.data.statusCode);
-         
-         if (response.data.success && response.data.statusCode === 200) {
-            setUser(response.data.data as PublicUser)
+
+         if (response.data.success) {
+            setUser(response.data.data ?? null)
             navigate('/')
          }
       } catch (error: unknown) {
-         console.log(error)
+         setServerError(getApiErrorMessage(error, 'Unable to log in. Please try again.'))
       }
    }
 
    return (
-      <>
-         <div>
-            <h2> Login Page </h2>
-            <hr />
-            <form onSubmit={handleSubmit(login)}>
-               <div className="group">
-                  <label htmlFor="username"> Username </label>
-                  <input
-                     type="text"
-                     {...register('username', { required: 'Username is empty' })}
-                     className="border"
-                  />
-                  {errors.username && (
-                     <InputError message={errors.username.message as string} />
-                  )}
+      <AuthShell>
+         <Card>
+            <CardHeader>
+               <div className="bg-primary text-primary-foreground mb-2 grid size-10 place-items-center rounded-xl">
+                  <LogIn className="size-5" />
                </div>
-               <div>
-                  <label htmlFor="passwod"> Password </label>
-                  <input
-                     type="text"
-                     {...register('password', {
-                        required: 'Password is empty.',
-                        minLength: { value: 6, message: 'Password cannot be less than 6.' },
-                     })}
-                     className="border"
-                  />
-                  {errors.username && (
-                     <InputError message={errors.username.message as string} />
+               <CardTitle>Welcome back</CardTitle>
+               <CardDescription>Log in to your Club account.</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+               <form
+                  onSubmit={handleSubmit(login)}
+                  className="flex flex-col gap-5"
+               >
+                  {serverError && (
+                     <Alert variant="destructive">
+                        <AlertDescription>{serverError}</AlertDescription>
+                     </Alert>
                   )}
+
+                  <FieldGroup>
+                     <Field data-invalid={!!errors.username}>
+                        <FieldLabel htmlFor="username">Username</FieldLabel>
+                        <InputGroup>
+                           <InputGroupAddon align="inline-start">
+                              <UserRound className="text-muted-foreground size-4" />
+                           </InputGroupAddon>
+                           <InputGroupInput
+                              id="username"
+                              autoComplete="username"
+                              placeholder="your-username"
+                              aria-invalid={!!errors.username}
+                              {...register('username', {
+                                 required: 'Username is empty.',
+                              })}
+                           />
+                        </InputGroup>
+                        <FieldError errors={[{ message: errors.username?.message as string }]} />
+                     </Field>
+
+                     <Field data-invalid={!!errors.password}>
+                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                        <InputGroup>
+                           <InputGroupAddon align="inline-start">
+                              <LockKeyhole className="text-muted-foreground size-4" />
+                           </InputGroupAddon>
+                           <InputGroupInput
+                              id="password"
+                              type={showPassword ? 'text' : 'password'}
+                              autoComplete="current-password"
+                              aria-invalid={!!errors.password}
+                              {...register('password', {
+                                 required: 'Password is empty.',
+                                 minLength: {
+                                    value: 6,
+                                    message: 'Password cannot be less than 6.',
+                                 },
+                              })}
+                           />
+                           <InputGroupAddon align="inline-end">
+                              <InputGroupButton
+                                 aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                 aria-pressed={showPassword}
+                                 onClick={() => setShowPassword((value: boolean) => !value)}
+                              >
+                                 {showPassword ? <EyeOff /> : <Eye />}
+                              </InputGroupButton>
+                           </InputGroupAddon>
+                        </InputGroup>
+                        <FieldError errors={[{ message: errors.password?.message as string }]} />
+                     </Field>
+                  </FieldGroup>
+
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                     {isSubmitting && <Spinner data-icon="inline-start" />}
+                     {isSubmitting ? 'Logging in' : 'Log in'}
+                  </Button>
+               </form>
+            </CardContent>
+
+            <CardFooter className="flex-col gap-3">
+               <div className="flex w-full items-center gap-3">
+                  <Separator className="flex-1" />
+                  <span className="text-muted-foreground text-xs">new here?</span>
+                  <Separator className="flex-1" />
                </div>
-               <button type="submit" className="bg-blue-200 pr-4 pl-4 pt-2 pb-2 rounded-10">
-                  Login
-               </button>
-            </form>
-         </div>
-      </>
+               <Button
+                  variant="outline"
+                  className="w-full"
+                  nativeButton={false}
+                  render={<Link to="/signup" />}
+               >
+                  Create an account
+               </Button>
+            </CardFooter>
+         </Card>
+      </AuthShell>
    )
 }
 
