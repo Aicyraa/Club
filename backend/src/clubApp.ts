@@ -1,3 +1,4 @@
+// Keep the Express app separate from Vercel's compiled entrypoint.
 import type { Express } from 'express'
 
 import express from 'express'

@@ -1,16 +1,24 @@
 {
    "$schema": "https://openapi.vercel.sh/vercel.json",
-   "installCommand": "npm ci --prefix backend && npm ci --prefix frontend",
-   "buildCommand": "npm run build --prefix backend && npm run build --prefix frontend",
-   "outputDirectory": "frontend/dist",
-   "functions": {
-      "api/[...path].ts": {
-         "maxDuration": 30,
-         "regions": ["iad1"]
+   "services": {
+      "api": {
+         "root": "backend",
+         "framework": "express",
+         "entrypoint": "app.js",
+         "buildCommand": "npm run build"
+      },
+      "ui": {
+         "root": "frontend",
+         "framework": "vite",
+         "buildCommand": "npm run build",
+         "rewrites": [
+            { "source": "/login", "destination": "/index.html" },
+            { "source": "/signup", "destination": "/index.html" }
+         ]
       }
    },
    "rewrites": [
-      { "source": "/login", "destination": "/index.html" },
-      { "source": "/signup", "destination": "/index.html" }
+      { "source": "/api/(.*)", "destination": { "service": "api" } },
+      { "source": "/(.*)", "destination": { "service": "ui" } }
    ]
 }

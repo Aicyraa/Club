@@ -1,4 +1,4 @@
-import app, { sessionStore } from './app'
+import app, { sessionStore } from './clubApp'
 import pool from '@models/pool'
 
 const port = Number(process.env.PORT)
