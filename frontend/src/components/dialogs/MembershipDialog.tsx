@@ -72,7 +72,7 @@ export const MembershipDialog = ({ open, onOpenChange, onUpgraded }: MembershipD
                   Unlock membership
                </DialogTitle>
                <DialogDescription>
-                  Enter the code to see who wrote each message. The code is in the project README.
+                  Enter the membership passcode to unlock member access.
                </DialogDescription>
             </DialogHeader>
 

@@ -131,6 +131,13 @@ CREATE TABLE IF NOT EXISTS session (
 
 CREATE INDEX IF NOT EXISTS session_expire_idx ON session (expire);
 
+-- The app connects with its server-side database role. These tables are never
+-- meant to be accessed through Supabase's public Data API, so enable RLS and
+-- leave the client-facing roles without policies.
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE session ENABLE ROW LEVEL SECURITY;
+
 -- ---------------------------------------------------------------------------
 -- Seed an admin
 -- ---------------------------------------------------------------------------

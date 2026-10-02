@@ -62,19 +62,19 @@ const Login = () => {
 
    return (
       <AuthShell>
-         <Card>
-            <CardHeader>
-               <div className="bg-primary text-primary-foreground mb-2 grid size-10 place-items-center rounded-xl">
+         <Card className="overflow-hidden rounded-2xl shadow-lg shadow-foreground/5">
+            <CardHeader className="gap-3 p-6 sm:p-8">
+               <div className="bg-primary text-primary-foreground mb-1 grid size-11 place-items-center rounded-xl">
                   <LogIn className="size-5" />
                </div>
                <CardTitle>Welcome back</CardTitle>
-               <CardDescription>Log in to your Club account.</CardDescription>
+               <CardDescription>Pick up where your community left off.</CardDescription>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="px-6 pb-6 sm:px-8">
                <form
                   onSubmit={handleSubmit(login)}
-                  className="flex flex-col gap-5"
+                  className="flex flex-col gap-6"
                >
                   {serverError && (
                      <Alert variant="destructive">
@@ -142,10 +142,10 @@ const Login = () => {
                </form>
             </CardContent>
 
-            <CardFooter className="flex-col gap-3">
+            <CardFooter className="bg-muted/50 flex-col gap-4 border-t px-6 py-5 sm:px-8">
                <div className="flex w-full items-center gap-3">
                   <Separator className="flex-1" />
-                  <span className="text-muted-foreground text-xs">new here?</span>
+                  <span className="text-muted-foreground text-xs">New to the Club?</span>
                   <Separator className="flex-1" />
                </div>
                <Button

@@ -1,14 +1,15 @@
 import type { ApiResponse } from '@repo/types'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useLoaderData, useNavigate, useRevalidator } from 'react-router-dom'
-import { MessageCircleMore } from 'lucide-react'
+import { MessageCircleMore, Sparkles } from 'lucide-react'
 
 import AppHeader from '@components/AppHeader'
 import MessageFeed from '@components/MessageFeed'
 import AddMessageDialog from '@components/dialogs/AddMessageDialog'
+import MembershipDialog from '@components/dialogs/MembershipDialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getRole } from '@/lib/role'
 import { useMessages } from '@hooks/useMessages'
 import { getApiErrorMessage } from '@services/setup'
@@ -21,6 +22,7 @@ function App() {
    const profile = useLoaderData() as Profile
    const navigate = useNavigate()
    const revalidator = useRevalidator()
+   const [membershipOpen, setMembershipOpen] = useState(false)
 
    const { messages, page, totalPages, total, isLoading, error, setPage, reload } = useMessages()
    const role = getRole(profile)
@@ -84,22 +86,20 @@ function App() {
                               <CardTitle className="truncate">{profile.username}</CardTitle>
                               <CardDescription className="truncate">{profile.email}</CardDescription>
                            </div>
-                        </div>
-                     </CardHeader>
-                     <CardContent className="flex flex-col gap-4">
-                        <Separator />
-                        <div className="grid grid-cols-2 gap-4">
-                           <div>
-                              <p className="text-2xl font-semibold tracking-tight">{profile.messageCount}</p>
+                           <div className="ml-auto shrink-0 text-right">
+                              <p className="text-xl font-semibold tracking-tight">{profile.messageCount}</p>
                               <p className="text-muted-foreground text-xs">Posts shared</p>
                            </div>
-                           <div>
-                              <p className="text-2xl font-semibold tracking-tight capitalize">{role}</p>
-                              <p className="text-muted-foreground text-xs">Access level</p>
-                           </div>
                         </div>
-                     </CardContent>
+                     </CardHeader>
                   </Card>
+
+                  {role === 'normal' && (
+                     <Button className="w-full" onClick={() => setMembershipOpen(true)}>
+                        <Sparkles data-icon="inline-start" />
+                        Unlock membership
+                     </Button>
+                  )}
 
                   <div className="sm:hidden">
                      <AddMessageDialog onCreated={handleMessageCreated} />
@@ -122,9 +122,6 @@ function App() {
                         </p>
                         <h2 className="text-2xl font-semibold tracking-tight">The board</h2>
                      </div>
-                     <p className="text-muted-foreground hidden max-w-xs text-right text-xs sm:block">
-                        Newest notes appear first. The board is paginated in groups of ten.
-                     </p>
                   </div>
 
                   <MessageFeed
@@ -141,6 +138,14 @@ function App() {
                </section>
             </div>
          </main>
+
+         {role === 'normal' && (
+            <MembershipDialog
+               open={membershipOpen}
+               onOpenChange={setMembershipOpen}
+               onUpgraded={() => revalidator.revalidate()}
+            />
+         )}
       </div>
    )
 }

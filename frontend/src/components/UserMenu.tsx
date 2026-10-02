@@ -2,7 +2,6 @@ import type { PublicUser, Role } from '@repo/types'
 import { useState } from 'react'
 import {
    BadgeCheck,
-   Crown,
    LogOut,
    MessageSquare,
    Settings2,
@@ -115,18 +114,6 @@ export const UserMenu = ({ user, role, messageCount, onLogout, onUserChange }: U
                         <DropdownMenuItem disabled>
                            <ShieldCheck data-icon="inline-start" />
                            Admin: can delete any message
-                        </DropdownMenuItem>
-                     </DropdownMenuGroup>
-                  </>
-               )}
-
-               {role === 'member' && (
-                  <>
-                     <DropdownMenuSeparator />
-                     <DropdownMenuGroup>
-                        <DropdownMenuItem disabled>
-                           <Crown data-icon="inline-start" />
-                           Member: authors are visible
                         </DropdownMenuItem>
                      </DropdownMenuGroup>
                   </>

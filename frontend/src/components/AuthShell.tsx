@@ -27,8 +27,8 @@ const HIGHLIGHTS = [
  */
 export const AuthShell = ({ children }: { children: ReactNode }) => {
    return (
-      <div className="grid min-h-screen bg-muted lg:grid-cols-[minmax(0,1.15fr)_minmax(28rem,0.85fr)]">
-         <aside className="bg-primary text-primary-foreground relative hidden overflow-hidden border-r lg:flex lg:flex-col lg:justify-between">
+      <div className="min-h-screen bg-muted lg:grid lg:grid-cols-[minmax(0,1.15fr)_minmax(28rem,0.85fr)]">
+         <aside className="bg-primary text-primary-foreground relative flex flex-col gap-10 overflow-hidden px-6 py-7 sm:px-10 lg:min-h-screen lg:justify-between lg:border-r lg:px-12 lg:py-10 xl:p-14">
             {/* Soft radial wash behind the content. */}
             <div
                aria-hidden="true"
@@ -39,30 +39,30 @@ export const AuthShell = ({ children }: { children: ReactNode }) => {
                }}
             />
 
-            <div className="relative flex items-center gap-2 p-10 xl:p-14">
+            <div className="relative flex items-center gap-2">
                <div className="bg-primary-foreground text-primary grid size-9 place-items-center rounded-full">
                   <Club />
                </div>
                <span className="text-base font-semibold tracking-tight">The Club</span>
             </div>
 
-            <div className="relative flex flex-col gap-10 p-10 xl:p-14">
+            <div className="relative flex flex-col gap-8 lg:my-auto lg:gap-10">
                <div className="flex flex-col gap-4">
-                  <p className="text-xs font-semibold tracking-widest uppercase">Invitation only, by design</p>
-                  <h2 className="max-w-2xl text-5xl leading-[0.95] font-semibold tracking-[-0.05em] text-balance xl:text-7xl">
+                  <p className="text-xs font-semibold tracking-widest uppercase">A thoughtful corner of the internet</p>
+                  <h2 className="max-w-2xl text-4xl leading-[0.98] font-semibold tracking-[-0.05em] text-balance sm:text-5xl lg:text-6xl xl:text-7xl">
                      A smaller room makes space for bigger ideas.
                   </h2>
-                  <p className="text-primary-foreground/70 max-w-lg text-base leading-relaxed">
+                  <p className="text-primary-foreground/75 max-w-lg text-sm leading-relaxed sm:text-base">
                      One thoughtful feed, three levels of trust. Start private, become a
                      member, and help shape the conversation.
                   </p>
                </div>
 
-               <ul className="grid gap-4 xl:grid-cols-3">
+               <ul className="hidden gap-4 lg:grid lg:grid-cols-3">
                   {HIGHLIGHTS.map(({ icon: Icon, title, body }) => (
-                     <li key={title} className="border-primary-foreground/20 flex flex-col gap-3 border-t pt-4">
+                     <li key={title} className="border-primary-foreground/25 flex flex-col gap-3 border-t pt-4">
                         <div className="bg-primary-foreground/10 grid size-9 shrink-0 place-items-center rounded-full">
-                           <Icon />
+                           <Icon className="size-4" />
                         </div>
                         <div className="flex flex-col gap-1">
                            <p className="text-sm font-medium">{title}</p>
@@ -73,13 +73,13 @@ export const AuthShell = ({ children }: { children: ReactNode }) => {
                </ul>
             </div>
 
-            <p className="text-primary-foreground/50 relative p-10 text-xs xl:p-14">
+            <p className="text-primary-foreground/60 relative hidden text-xs lg:block">
                Private by default. Useful by choice.
             </p>
          </aside>
 
-         <main className="flex items-center justify-center bg-background p-6 sm:p-10">
-            <div className="w-full max-w-sm">{children}</div>
+         <main className="flex min-h-screen items-start justify-center bg-background p-4 sm:p-8 lg:items-center lg:p-12">
+            <div className="w-full max-w-md">{children}</div>
          </main>
       </div>
    )

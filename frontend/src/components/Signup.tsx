@@ -70,19 +70,19 @@ const Signup = () => {
 
    return (
       <AuthShell>
-         <Card>
-            <CardHeader>
-               <div className="bg-primary text-primary-foreground mb-2 grid size-10 place-items-center rounded-xl">
+         <Card className="overflow-hidden rounded-2xl shadow-lg shadow-foreground/5">
+            <CardHeader className="gap-3 p-6 sm:p-8">
+               <div className="bg-primary text-primary-foreground mb-1 grid size-11 place-items-center rounded-xl">
                   <UserPlus className="size-5" />
                </div>
                <CardTitle>Create your account</CardTitle>
                <CardDescription>
-                  Join Club to get access to members-only options.
+                  Make yourself at home. You can join the conversation right away.
                </CardDescription>
             </CardHeader>
 
-            <CardContent>
-               <div className="mb-5 flex items-center gap-3">
+            <CardContent className="px-6 pb-6 sm:px-8">
+               <div className="mb-6 flex items-center gap-3 rounded-xl border bg-muted/40 p-3">
                   <Avatar className="size-12">
                      {previewName && <AvatarImage src={dicebear(previewName)} />}
                      <AvatarFallback>{(previewName || '?').slice(0, 2).toUpperCase()}</AvatarFallback>
@@ -96,7 +96,7 @@ const Signup = () => {
 
                <form
                   onSubmit={handleSubmit(signup)}
-                  className="flex flex-col gap-5"
+                  className="flex flex-col gap-6"
                >
                   {serverError && (
                      <Alert variant="destructive">
@@ -192,10 +192,10 @@ const Signup = () => {
                </form>
             </CardContent>
 
-            <CardFooter className="flex-col gap-3">
+            <CardFooter className="bg-muted/50 flex-col gap-4 border-t px-6 py-5 sm:px-8">
                <div className="flex w-full items-center gap-3">
                   <Separator className="flex-1" />
-                  <span className="text-muted-foreground text-xs">already a member?</span>
+                  <span className="text-muted-foreground text-xs">Already have an account?</span>
                   <Separator className="flex-1" />
                </div>
                <Button

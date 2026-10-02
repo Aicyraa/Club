@@ -19,16 +19,11 @@ import { messages } from '@routes/messageRoute'
 import { profiles } from '@routes/profileRoute'
 import pool from '@models/pool'
 
-const port = Number(process.env.PORT)
 const environment = process.env.ENVIRONMENT
 const sessionSecret = process.env.SECRET?.trim()
 const corsOrigins = process.env.CORS_ORIGIN?.split(',')
    .map((origin) => origin.trim())
    .filter(Boolean)
-
-if (!Number.isInteger(port) || port < 1 || port > 65535) {
-   throw new Error('PORT must be an integer between 1 and 65535.')
-}
 
 if (environment !== 'DEV' && environment !== 'PROD') {
    throw new Error('ENVIRONMENT must be set to either DEV or PROD.')
@@ -53,7 +48,7 @@ const app: Express = express()
 // every session on restart. The existing pool is reused so the app still opens
 // exactly one set of connections.
 const PgStore = connectPgSimple(session)
-const sessionStore = new PgStore({
+export const sessionStore = new PgStore({
    pool,
    tableName: 'session',
    // Production deploys should apply sql/schema.sql with a database role that
@@ -110,59 +105,4 @@ app.use('/api/v1/profiles', profiles)
 app.use(unknownPage)
 app.use(errorHandler)
 
-let server: ReturnType<typeof app.listen> | undefined
-let isShuttingDown = false
-
-const start = async () => {
-   if (isProduction) {
-      // Fail the deployment before it starts accepting traffic if the session
-      // migration was skipped or has the wrong shape.
-      await pool.query('SELECT sid, sess, expire FROM session LIMIT 0')
-   } else {
-      await pool.query('SELECT 1')
-   }
-
-   server = app.listen(port, () => {
-      if (!isProduction) {
-         console.log(`Backend: Server listening on port ${port}`)
-      }
-   })
-}
-
-const shutdown = async (signal: NodeJS.Signals) => {
-   if (isShuttingDown) return
-   isShuttingDown = true
-
-   if (!isProduction) console.log(`Backend: Received ${signal}, shutting down`)
-
-   const forceCloseTimer = setTimeout(() => server?.closeAllConnections(), 10_000)
-   forceCloseTimer.unref()
-
-   try {
-      if (server) {
-         await new Promise<void>((resolve, reject) => {
-            server?.close((error) => (error ? reject(error) : resolve()))
-         })
-      }
-
-      await sessionStore.close()
-      await pool.end()
-   } catch (error) {
-      console.error('Backend: Graceful shutdown failed', error)
-      process.exitCode = 1
-   } finally {
-      clearTimeout(forceCloseTimer)
-   }
-}
-
-process.once('SIGTERM', () => void shutdown('SIGTERM'))
-process.once('SIGINT', () => void shutdown('SIGINT'))
-
-void start().catch(async (error: unknown) => {
-   console.error('Backend: Startup failed', error)
-   process.exitCode = 1
-   await sessionStore.close()
-   await pool.end()
-})
-
-export default passport
+export default app
