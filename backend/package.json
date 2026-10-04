@@ -5,7 +5,7 @@
   "main": "dist/clubApp.js",
   "scripts": {
     "dev": "dotenv -- nodemon --watch src --ext ts,json --exec \"tsx --tsconfig ./tsconfig.node.json ./src/server.ts\"",
-    "build": "rm -rf ./dist && tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json",
+    "build": "rm -rf ./dist && tsc -p tsconfig.app.json && tsc-alias -p tsconfig.app.json && esbuild dist/clubApp.js --bundle --platform=node --format=cjs --target=node22 --outfile=dist/clubApp.bundle.js",
     "start": "dotenv -- node ./dist/server.js"
   },
   "keywords": [],
@@ -36,6 +36,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-local": "^1.0.38",
     "@types/pg": "^8.23.1",
+    "esbuild": "0.28.2",
     "nodemon": "^3.1.14",
     "tsc-alias": "^1.9.5",
     "tsx": "^4.23.13",
